@@ -1,0 +1,50 @@
+{
+    "name": "@fhoke/tailor",
+    "author": {
+        "name": "Seb Kay",
+        "email": "seb@fhoke.com",
+        "url": "https://www.fhoke.com"
+    },
+    "repository": {
+        "url": "https://github.com/Fhoke/tailor.git",
+        "type": "git"
+    },
+    "dependencies": {
+        "@babel/core": "^7.14",
+        "@babel/plugin-transform-block-scoping": "^7.14",
+        "@babel/plugin-transform-template-literals": "^7.13",
+        "autoprefixer": "^10.2",
+        "babel-loader": "^8.2",
+        "body-scroll-lock": "^3.1",
+        "bxslider": "^4.2",
+        "copy-webpack-plugin": "^9.0",
+        "css-loader": "^5.2",
+        "filemanager-webpack-plugin": "^6.1",
+        "image-minimizer-webpack-plugin": "^2.2",
+        "imagemin-gifsicle": "^7.0",
+        "imagemin-jpegtran": "^7.0",
+        "imagemin-optipng": "^8.0",
+        "imagemin-svgo": "^9.0",
+        "jcf": "^1.2",
+        "jquery": "^3.6",
+        "jquery-validation": "^1.19",
+        "mini-css-extract-plugin": "^2.0",
+        "picturefill": "^3.0",
+        "postcss": "^8.3",
+        "postcss-loader": "^6.1",
+        "sass": "^1.32",
+        "sass-loader": "^11.0",
+        "webpack": "^5.42",
+        "webpack-cli": "^4.7",
+        "webpack-notifier": "^1.13"
+    },
+    "scripts": {
+        "dev": "webpack --mode=development",
+        "prod": "webpack --mode=production",
+        "watch": "webpack --mode=development --watch",
+        "watch:prod": "webpack --mode=production --watch"
+    },
+    "browserslist": [
+        "> 0.5%, last 2 versions, Firefox ESR, not dead"
+    ]
+}
