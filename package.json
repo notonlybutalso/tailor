@@ -40,10 +40,10 @@
         "webpack-notifier": "^1.13"
     },
     "scripts": {
-        "dev": "webpack --mode=development",
-        "prod": "webpack --mode=production",
-        "watch": "webpack --mode=development --watch",
-        "watch:prod": "webpack --mode=production --watch"
+        "tailor": "./tailor.js"
+    },
+    "bin": {
+        "tailor": "./tailor.js"
     },
     "browserslist": [
         "> 0.5%, last 2 versions, Firefox ESR, not dead"
