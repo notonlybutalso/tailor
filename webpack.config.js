@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-const WebpackNotifierPlugin = require('webpack-notifier');
+const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 
 module.exports = (env, options) => {
@@ -181,12 +181,8 @@ module.exports = (env, options) => {
                 },
             }),
 
-            new WebpackNotifierPlugin({
-                emoji: true,
-                alwaysNotify: true,
-                title: function () {
-                    return 'Tailor';
-                },
+            new WebpackBuildNotifierPlugin({
+                title: 'Tailor',
             }),
         ],
     }

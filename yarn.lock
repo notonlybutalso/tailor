@@ -3018,7 +3018,7 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-node-notifier@^9.0.0:
+node-notifier@9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/node-notifier/-/node-notifier-9.0.1.tgz#cea837f4c5e733936c7b9005e6545cea825d1af4"
   integrity sha512-fPNFIp2hF/Dq7qLDzSg4vZ0J4e9v60gJR+Qx7RbjbWqzPDdEqeVpEx5CFeDAELIl+A/woaaNn1fQ5nEVerMxJg==
@@ -4382,6 +4382,14 @@ watchpack@^2.2.0:
     glob-to-regexp "^0.4.1"
     graceful-fs "^4.1.2"
 
+webpack-build-notifier@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/webpack-build-notifier/-/webpack-build-notifier-2.3.0.tgz#cb314fbe85b2684e00443b465c08026e812b83f5"
+  integrity sha512-+/s6GrvSRwP0CHqHOqZcta7EcqjL1MUR9KmBSlkJj6xJVZtFB/z68CTeLPrHnMED/umlXN9hcFV8wmGjeI/K2A==
+  dependencies:
+    node-notifier "9.0.1"
+    strip-ansi "^6.0.0"
+
 webpack-cli@^4.7:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-4.7.2.tgz#a718db600de6d3906a4357e059ae584a89f4c1a5"
@@ -4408,14 +4416,6 @@ webpack-merge@^5.7.3:
   dependencies:
     clone-deep "^4.0.1"
     wildcard "^2.0.0"
-
-webpack-notifier@^1.13:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/webpack-notifier/-/webpack-notifier-1.13.0.tgz#24e43d00ee47032f047373ca291b2d1f543ec12d"
-  integrity sha512-QLk6l/TZKGhyN6Hd1zobaiYno7S9YPX3wH86+YOSufHes77SegGhnGdj+4vrLDFK5A4ZKoQD5GRXXFnM0h0N8A==
-  dependencies:
-    node-notifier "^9.0.0"
-    strip-ansi "^6.0.0"
 
 webpack-sources@^2.3.0:
   version "2.3.0"
