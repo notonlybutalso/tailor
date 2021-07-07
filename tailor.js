@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 const Path = require('path');
-const { spawn } = require("child_process");
+const { spawn } = require('child_process');
+const chalk = require('chalk');
 
 const tailorRoot = Path.resolve(__dirname);
 const projectRoot = Path.resolve(__dirname, '/../../../');
@@ -17,7 +18,11 @@ if (commands.includes('dev')) {
         `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`
     ]);
 
-    execCommand(run, 'Compiling assets for development...', 'Assets finished compiling.');
+    execCommand(
+        run,
+        chalk.green('Compiling assets for ' + chalk.bgGreen.black('development')),
+        chalk.green('Assets finished compiling.')
+    );
 }
 
 //----  Webpack production build
@@ -27,7 +32,11 @@ if (commands.includes('prod')) {
         `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`
     ]);
 
-    execCommand(run, 'Compiling assets for production...', 'Assets finished compiling.');
+    execCommand(
+        run,
+        chalk.green('Compiling assets for ' + chalk.bgGreen.black('production')),
+        chalk.green('Assets finished compiling.')
+    );
 }
 
 //----  Webpack watch for development changes
@@ -38,7 +47,10 @@ if (commands.includes('watch-dev')) {
         `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`
     ]);
 
-    execCommand(run, 'Watching assets for development...', 'Assets finished compiling.');
+    execCommand(
+        run,
+        chalk.green('Watching assets for ' + chalk.bgGreen.black('development'))
+    );
 }
 
 //----  Webpack watch for production changes
@@ -49,7 +61,10 @@ if (commands.includes('watch-prod')) {
         `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`
     ]);
 
-    execCommand(run, 'Watching assets for production...', 'Assets finished compiling.');
+    execCommand(
+        run,
+        chalk.green('Watching assets for ' + chalk.bgGreen.black('production'))
+    );
 }
 
 /**
