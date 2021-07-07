@@ -4,7 +4,7 @@
 
 ## Usage
 
-To use Tailor in your projects you just need to install it as a dependency:
+To use Tailor in your project you just need to install it as a dependency:
 
 ```shell
 # NPM
