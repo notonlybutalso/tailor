@@ -8,62 +8,66 @@ const tailorRoot = Path.resolve(__dirname);
 const projectRoot = Path.resolve(__dirname, '/../../../');
 const commands = process.argv.slice(2);
 
+const packageName = 'Tailor';
+const strSpacerStart = chalk.gray(`============================== ${packageName} ==============================`);
+const strSpacerEnd = chalk.gray(`====================================================================`);
+
 /**
  * Execute commands
  */
 //----  Webpack devevelopment build
 if (commands.includes('dev')) {
-    const run = spawn('./node_modules/.bin/webpack', [
+    const cmd = spawn('./node_modules/.bin/webpack', [
         '--mode=development',
         `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`
-    ]);
+    ], { stdio: "inherit" });
 
     execCommand(
-        run,
-        chalk.green('Compiling assets for ' + chalk.bgGreen.black('development')),
-        chalk.green('Assets finished compiling.')
+        cmd,
+        chalk.white(`Compiling Assets (${chalk.green('development')})`),
+        chalk.white(`Assets compiled (${chalk.green('development')})`)
     );
 }
 
 //----  Webpack production build
 if (commands.includes('prod')) {
-    const run = spawn('./node_modules/.bin/webpack', [
+    const cmd = spawn('./node_modules/.bin/webpack', [
         '--mode=production',
         `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`
-    ]);
+    ], { stdio: "inherit" });
 
     execCommand(
-        run,
-        chalk.green('Compiling assets for ' + chalk.bgGreen.black('production')),
-        chalk.green('Assets finished compiling.')
+        cmd,
+        chalk.white(`Compiling Assets (${chalk.green('production')})`),
+        chalk.white(`Assets compiled (${chalk.green('production')})`)
     );
 }
 
 //----  Webpack watch for development changes
 if (commands.includes('watch-dev')) {
-    const run = spawn('./node_modules/.bin/webpack', [
+    const cmd = spawn('./node_modules/.bin/webpack', [
         '--mode=development',
         '--watch',
-        `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`
-    ]);
+        `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`,
+    ], { stdio: "inherit" });
 
     execCommand(
-        run,
-        chalk.green('Watching assets for ' + chalk.bgGreen.black('development'))
+        cmd,
+        chalk.white(`Watching Assets (${chalk.green('development')})`),
     );
 }
 
 //----  Webpack watch for production changes
 if (commands.includes('watch-prod')) {
-    const run = spawn('./node_modules/.bin/webpack', [
+    const cmd = spawn('./node_modules/.bin/webpack', [
         '--mode=production',
         '--watch',
         `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`
-    ]);
+    ], { stdio: "inherit" });
 
     execCommand(
-        run,
-        chalk.green('Watching assets for ' + chalk.bgGreen.black('production'))
+        cmd,
+        chalk.white(`Watching Assets (${chalk.green('production')})`),
     );
 }
 
@@ -73,27 +77,23 @@ if (commands.includes('watch-prod')) {
  * @param {ChildProcessWithoutNullStreams} spawn
  */
 function execCommand(spawn, start_message = '', end_message = '') {
-    spawn.stdout.on("data", data => {
-        console.log(`${data}`);
-    });
-
-    // runDev.stderr.on("data", data => {
-    //     console.log(`${data}`);
-    // });
-
     if (start_message) {
         spawn.on("spawn", code => {
-            console.log(start_message);
+            console.log(
+                `${strSpacerStart}\n` +
+                `${start_message}\n` +
+                `${strSpacerEnd}\n`
+            );
         });
     }
 
-    spawn.on('error', (error) => {
-        console.log(`Error: ${error.message}`);
-    });
-
     if (end_message) {
         spawn.on("close", code => {
-            console.log(end_message);
+            console.log(
+                `\n${strSpacerStart}\n` +
+                `${end_message}\n` +
+                `${strSpacerEnd}`
+            );
         });
     }
 }
