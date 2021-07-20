@@ -24,8 +24,8 @@ if (commands.includes('dev')) {
 
     execCommand(
         cmd,
-        chalk.white(`Compiling Assets (${chalk.green('development')})`),
-        chalk.white(`Assets compiled (${chalk.green('development')})`)
+        chalk.white(`${chalk.magenta('==>')} Compiling assets (${chalk.green('development')})...`),
+        chalk.white(`${chalk.green('\u2714')} Assets compiled (${chalk.green('development')})`)
     );
 }
 
@@ -38,8 +38,8 @@ if (commands.includes('prod')) {
 
     execCommand(
         cmd,
-        chalk.white(`Compiling Assets (${chalk.green('production')})`),
-        chalk.white(`Assets compiled (${chalk.green('production')})`)
+        chalk.white(`${chalk.magenta('==>')} Compiling assets (${chalk.green('production')})...`),
+        chalk.white(`${chalk.green('\u2714')} Assets compiled (${chalk.green('production')})`)
     );
 }
 
@@ -53,7 +53,7 @@ if (commands.includes('watch-dev')) {
 
     execCommand(
         cmd,
-        chalk.white(`Watching Assets (${chalk.green('development')})`),
+        chalk.white(`${chalk.magenta('==>')} Watching assets (${chalk.green('development')})...`)
     );
 }
 
@@ -67,7 +67,7 @@ if (commands.includes('watch-prod')) {
 
     execCommand(
         cmd,
-        chalk.white(`Watching Assets (${chalk.green('production')})`),
+        chalk.white(`${chalk.magenta('==>')} Watching assets (${chalk.green('production')})...`)
     );
 }
 
@@ -81,8 +81,7 @@ function execCommand(spawn, start_message = '', end_message = '') {
         spawn.on("spawn", code => {
             console.log(
                 `${strSpacerStart}\n` +
-                `${start_message}\n` +
-                `${strSpacerEnd}\n`
+                `${start_message}\n`
             );
         });
     }
@@ -90,9 +89,8 @@ function execCommand(spawn, start_message = '', end_message = '') {
     if (end_message) {
         spawn.on("close", code => {
             console.log(
-                `\n${strSpacerStart}\n` +
-                `${end_message}\n` +
-                `${strSpacerEnd}`
+                `\n${end_message}\n` +
+                `${strSpacerStart}`
             );
         });
     }
