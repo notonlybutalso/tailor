@@ -56,29 +56,7 @@ module.exports = (env, options) => {
         },
 
         entry: {
-            ...themeConfig.entry ?? {},
-            ...{
-                'app': [
-                    Path.resolve(assetsDir + '/js/app.js'),
-                    Path.resolve(assetsDir + '/scss/app.scss'),
-                ],
-                'ajax': [
-                    Path.resolve(assetsDir + '/js/ajax/ajax.js'),
-                ],
-                'admin-login': [
-                    Path.resolve(assetsDir + '/scss/admin/admin-login.scss'),
-                ],
-                'admin': [
-                    Path.resolve(assetsDir + '/scss/admin/admin.scss'),
-                ],
-                'toolbar': [
-                    Path.resolve(assetsDir + '/scss/admin/toolbar.scss'),
-                ],
-                'tinymce': [
-                    Path.resolve(assetsDir + '/js/admin/tinymce.js'),
-                    Path.resolve(assetsDir + '/scss/admin/tinymce.scss'),
-                ],
-            },
+            ...(themeConfig.entry ?? {}),
         },
 
         output: {
@@ -178,11 +156,7 @@ module.exports = (env, options) => {
             new FileManagerPlugin({
                 events: {
                     onEnd: {
-                        delete: [
-                            Path.resolve(buildDir + '/js/admin-login.min.js'),
-                            Path.resolve(buildDir + '/js/admin.min.js'),
-                            Path.resolve(buildDir + '/js/toolbar.min.js'),
-                        ],
+                        delete: themeConfig.deleteOnEnd ?? ['| Nothing to delete.'],
                     },
                 },
             }),
