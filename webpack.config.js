@@ -6,11 +6,14 @@ const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 
+const projectRoot = Path.resolve(__dirname, '../../../');
+const assetsDir = Path.resolve(projectRoot, 'assets');
+const buildDir = Path.resolve(projectRoot, 'dist');
+
+const themeConfig = require(projectRoot + '/tailor.js');
+
 module.exports = (env, options) => {
     const isProduction = options.mode == 'production';
-    const projectRoot = Path.resolve(__dirname, '../../../');
-    const assetsDir = Path.resolve(projectRoot, 'assets');
-    const buildDir = Path.resolve(projectRoot, 'dist');
 
     let ImageMinimizerPlugins = [
         ['gifsicle'],
@@ -53,26 +56,29 @@ module.exports = (env, options) => {
         },
 
         entry: {
-            'app': [
-                Path.resolve(assetsDir + '/js/app.js'),
-                Path.resolve(assetsDir + '/scss/app.scss'),
-            ],
-            'ajax': [
-                Path.resolve(assetsDir + '/js/ajax/ajax.js'),
-            ],
-            'admin-login': [
-                Path.resolve(assetsDir + '/scss/admin/admin-login.scss'),
-            ],
-            'admin': [
-                Path.resolve(assetsDir + '/scss/admin/admin.scss'),
-            ],
-            'toolbar': [
-                Path.resolve(assetsDir + '/scss/admin/toolbar.scss'),
-            ],
-            'tinymce': [
-                Path.resolve(assetsDir + '/js/admin/tinymce.js'),
-                Path.resolve(assetsDir + '/scss/admin/tinymce.scss'),
-            ],
+            ...themeConfig.entry ?? {},
+            ...{
+                'app': [
+                    Path.resolve(assetsDir + '/js/app.js'),
+                    Path.resolve(assetsDir + '/scss/app.scss'),
+                ],
+                'ajax': [
+                    Path.resolve(assetsDir + '/js/ajax/ajax.js'),
+                ],
+                'admin-login': [
+                    Path.resolve(assetsDir + '/scss/admin/admin-login.scss'),
+                ],
+                'admin': [
+                    Path.resolve(assetsDir + '/scss/admin/admin.scss'),
+                ],
+                'toolbar': [
+                    Path.resolve(assetsDir + '/scss/admin/toolbar.scss'),
+                ],
+                'tinymce': [
+                    Path.resolve(assetsDir + '/js/admin/tinymce.js'),
+                    Path.resolve(assetsDir + '/scss/admin/tinymce.scss'),
+                ],
+            },
         },
 
         output: {
