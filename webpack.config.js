@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
+const WebpackNotifierPlugin = require('webpack-notifier');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 
 module.exports = (env, options) => {
