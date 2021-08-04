@@ -181,8 +181,12 @@ module.exports = (env, options) => {
                 },
             }),
 
-            new WebpackBuildNotifierPlugin({
-                title: 'Tailor',
+            new WebpackNotifierPlugin({
+                emoji: true,
+                alwaysNotify: true,
+                title: function () {
+                    return 'Tailor';
+                },
             }),
         ],
     }
