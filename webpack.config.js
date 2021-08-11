@@ -141,6 +141,7 @@ module.exports = (env, options) => {
                     {
                         from: Path.resolve(assetsDir + '/img'),
                         to: Path.resolve(buildDir + '/img'),
+                        noErrorOnMissing: true,
                     },
                 ],
             }),
