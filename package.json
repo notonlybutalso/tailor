@@ -10,6 +10,9 @@
         "url": "https://github.com/Fhoke/tailor.git",
         "type": "git"
     },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
     "dependencies": {
         "@babel/core": "^7.14",
         "@babel/plugin-transform-block-scoping": "^7.14",
