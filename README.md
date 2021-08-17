@@ -8,11 +8,13 @@ To use Tailor in your project you just need to install it as a dependency:
 
 ```shell
 # NPM
-npm install git+ssh:git@github.com:Fhoke/tailor.git
+npm install @fhoke/tailor
 
 # Yarn
-yarn add git+ssh:git@github.com:Fhoke/tailor.git
+yarn add @fhoke/tailor
 ```
+
+**Important**: You will need to be logged in to NPM via the command line as Tailor is a private NPM package.
 
 ## Scripts
 
