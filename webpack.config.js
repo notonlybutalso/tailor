@@ -89,6 +89,10 @@ module.exports = (env, options) => {
         module: {
             rules: [
                 {
+                    test: /\.svg$/,
+                    loader: 'svg-inline-loader',
+                },
+                {
                     test: /\.(sa|sc|c)ss$/,
                     use: [
                         MiniCssExtractPlugin.loader,

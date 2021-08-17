@@ -1,6 +1,7 @@
 {
     "name": "@fhoke/tailor",
-    "version": "2.1.1",
+    "version": "2.2.0",
+    "license": "UNLICENSED",
     "author": {
         "name": "Seb Kay",
         "email": "seb@fhoke.com",
@@ -34,6 +35,7 @@
         "postcss-loader": "^6.1",
         "sass": "^1.32",
         "sass-loader": "^12.0",
+        "svg-inline-loader": "^0.8",
         "webpack": "^5.42",
         "webpack-cli": "^4.7",
         "webpack-notifier": "^1.13"
