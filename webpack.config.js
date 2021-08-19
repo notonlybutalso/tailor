@@ -5,12 +5,9 @@ const CopyPlugin = require("copy-webpack-plugin");
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
+const TailorClass = require('./src/Tailor');
 
-const projectRoot = Path.resolve(__dirname, '../../../');
-const assetsDir = Path.resolve(projectRoot, 'assets');
-const buildDir = Path.resolve(projectRoot, 'dist');
-
-const themeConfig = require(projectRoot + '/tailor.js');
+const Tailor = new TailorClass();
 
 module.exports = (env, options) => {
     const isProduction = options.mode == 'production';
@@ -56,12 +53,12 @@ module.exports = (env, options) => {
         },
 
         entry: {
-            ...(themeConfig.entry ?? {}),
+            ...(Tailor.providerSettings.config.entry ?? {}),
         },
 
         output: {
             filename: '[name].min.js',
-            path: Path.resolve(buildDir + '/js'),
+            path: Path.resolve(Tailor.providerSettings.buildDir + '/js'),
         },
 
         resolve: {
@@ -144,8 +141,8 @@ module.exports = (env, options) => {
             new CopyPlugin({
                 patterns: [
                     {
-                        from: Path.resolve(assetsDir + '/img'),
-                        to: Path.resolve(buildDir + '/img'),
+                        from: Path.resolve(Tailor.providerSettings.assetsDir + '/img'),
+                        to: Path.resolve(Tailor.providerSettings.buildDir + '/img'),
                         noErrorOnMissing: true,
                     },
                 ],
@@ -162,7 +159,7 @@ module.exports = (env, options) => {
             new FileManagerPlugin({
                 events: {
                     onEnd: {
-                        delete: themeConfig.deleteOnEnd ?? ['| Nothing to delete.'],
+                        delete: Tailor.providerSettings.config.deleteOnEnd ?? ['| Nothing to delete.'],
                     },
                 },
             }),

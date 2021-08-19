@@ -3,23 +3,20 @@
 const Path = require('path');
 const { spawn } = require('child_process');
 const chalk = require('chalk');
+const TailorClass = require('./src/Tailor');
 
-const tailorRoot = Path.resolve(__dirname);
-const projectRoot = Path.resolve(__dirname, '/../../../');
+const Tailor = new TailorClass();
+
 const commands = process.argv.slice(2);
-
-const packageName = 'Tailor';
-const strSpacerStart = chalk.gray(`============================== ${packageName} ==============================`);
-const strSpacerEnd = chalk.gray(`====================================================================`);
 
 /**
  * Execute commands
  */
 //----  Webpack devevelopment build
 if (commands.includes('dev')) {
-    const cmd = spawn('./node_modules/.bin/webpack', [
+    const cmd = spawn(Tailor.providerSettings.root + '/node_modules/.bin/webpack', [
         '--mode=development',
-        `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`
+        `--config=${Path.resolve(Tailor.root, 'webpack.config.js')}`
     ], { stdio: "inherit" });
 
     execCommand(
@@ -31,9 +28,9 @@ if (commands.includes('dev')) {
 
 //----  Webpack production build
 if (commands.includes('prod')) {
-    const cmd = spawn('./node_modules/.bin/webpack', [
+    const cmd = spawn(Tailor.providerSettings.root + '/node_modules/.bin/webpack', [
         '--mode=production',
-        `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`
+        `--config=${Path.resolve(Tailor.root, 'webpack.config.js')}`
     ], { stdio: "inherit" });
 
     execCommand(
@@ -45,10 +42,10 @@ if (commands.includes('prod')) {
 
 //----  Webpack watch for development changes
 if (commands.includes('watch-dev')) {
-    const cmd = spawn('./node_modules/.bin/webpack', [
+    const cmd = spawn(Tailor.providerSettings.root + '/node_modules/.bin/webpack', [
         '--mode=development',
         '--watch',
-        `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`,
+        `--config=${Path.resolve(Tailor.root, 'webpack.config.js')}`,
     ], { stdio: "inherit" });
 
     execCommand(
@@ -59,10 +56,10 @@ if (commands.includes('watch-dev')) {
 
 //----  Webpack watch for production changes
 if (commands.includes('watch-prod')) {
-    const cmd = spawn('./node_modules/.bin/webpack', [
+    const cmd = spawn(Tailor.providerSettings.root + '/node_modules/.bin/webpack', [
         '--mode=production',
         '--watch',
-        `--config=${Path.resolve(tailorRoot, 'webpack.config.js')}`
+        `--config=${Path.resolve(Tailor.root, 'webpack.config.js')}`
     ], { stdio: "inherit" });
 
     execCommand(
@@ -80,7 +77,7 @@ function execCommand(spawn, start_message = '', end_message = '') {
     if (start_message) {
         spawn.on("spawn", code => {
             console.log(
-                `${strSpacerStart}\n` +
+                `${Tailor.cmdSettings.spacerStart}\n` +
                 `${start_message}\n`
             );
         });
@@ -90,7 +87,7 @@ function execCommand(spawn, start_message = '', end_message = '') {
         spawn.on("close", code => {
             console.log(
                 `\n${end_message}\n` +
-                `${strSpacerStart}`
+                `${Tailor.cmdSettings.spacerStart}`
             );
         });
     }
