@@ -128,6 +128,7 @@ module.exports = (env, options) => {
                             plugins: [
                                 '@babel/plugin-transform-template-literals',
                                 '@babel/plugin-transform-block-scoping',
+                                '@babel/plugin-proposal-nullish-coalescing-operator',
                             ],
                         },
                     },
