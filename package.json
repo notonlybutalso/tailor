@@ -7,6 +7,7 @@
         "email": "seb@fhoke.com",
         "url": "https://www.fhoke.com"
     },
+    "main": "./src/Tailor.js",
     "repository": {
         "url": "https://github.com/Fhoke/tailor.git",
         "type": "git"
