@@ -121,6 +121,115 @@ class Tailor {
             });
         }
     }
+
+    /**
+     * Settings for ImageMinimizerPlugin
+     *
+     * @param {boolean} isProduction
+     * @returns {string[][]}
+     */
+    imageOptimisationSettings(isProduction = false) {
+        let settings = [
+            ['gifsicle'],
+            ['jpegtran'],
+            ['optipng'],
+        ];
+
+        if (isProduction) {
+            settings.push(['svgo', {
+                plugins: [
+                    {
+                        name: "removeViewBox",
+                        active: false,
+                    },
+                    {
+                        name: "minifyStyles",
+                        active: true,
+                    },
+                    {
+                        name: "removeDoctype",
+                        active: true,
+                    },
+                    {
+                        name: "collapseGroups",
+                        active: true,
+                    },
+                    {
+                        name: "removeTitle",
+                        active: true,
+                    },
+                ],
+            }]);
+        }
+
+        return settings;
+    }
+
+    /**
+     * Settings for FileManagerPlugin
+     *
+     * @param {boolean} isProduction
+     * @returns {object}
+     */
+    fileManagerSettings(isProduction = false) {
+        let toDelete = this.providerSettings.config.deleteOnEnd ?? ['| Nothing to delete.'];
+
+        let settings = {
+            onEnd: {
+                delete: toDelete,
+            },
+        };
+
+        if (isProduction) {
+            toDelete.push(this.providerSettings.root + '/theme');
+
+            settings.onEnd = {
+                ...settings.onEnd,
+                ...{
+                    delete: toDelete,
+                    mkdir: [
+                        this.providerSettings.root + '/theme',
+                    ],
+                    copy: [
+                        {
+                            source: this.providerSettings.root + '/dist/',
+                            destination: this.providerSettings.root + '/theme/dist',
+                        },
+                        {
+                            source: this.providerSettings.root + '/includes/',
+                            destination: this.providerSettings.root + '/theme/includes',
+                        },
+                        {
+                            source: this.providerSettings.root + '/src/',
+                            destination: this.providerSettings.root + '/theme/src',
+                        },
+                        {
+                            source: this.providerSettings.root + '/templates/',
+                            destination: this.providerSettings.root + '/theme/templates',
+                        },
+                        {
+                            source: this.providerSettings.root + '/vendor/',
+                            destination: this.providerSettings.root + '/theme/vendor',
+                        },
+                        {
+                            source: this.providerSettings.root + '/*.php',
+                            destination: this.providerSettings.root + '/theme/',
+                        },
+                        {
+                            source: this.providerSettings.root + '/style.css',
+                            destination: this.providerSettings.root + '/theme/',
+                        },
+                        {
+                            source: this.providerSettings.root + '/screenshot.*',
+                            destination: this.providerSettings.root + '/theme/',
+                        },
+                    ],
+                },
+            };
+        }
+
+        return settings;
+    }
 }
 
 module.exports = Tailor;
