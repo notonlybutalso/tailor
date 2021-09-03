@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-const TailorClass = require('./src/Tailor');
+const path = require('path');
+const TailorClass = require(path.resolve(__dirname, './src/Tailor'));
 const Tailor = new TailorClass();
 
 const commands = process.argv.slice(2);

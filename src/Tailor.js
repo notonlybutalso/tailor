@@ -8,7 +8,7 @@ class Tailor {
         this.root = path.resolve(__dirname, '../');
 
         this.providerSettings = {
-            root: path.resolve(__dirname, '../../../../'),
+            root: path.resolve(process.cwd()),
         };
 
         this.providerSettings = {
