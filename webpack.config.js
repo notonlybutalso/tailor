@@ -12,39 +12,6 @@ const Tailor = new TailorClass();
 module.exports = (env, options) => {
     const isProduction = options.mode == 'production';
 
-    let ImageMinimizerPlugins = [
-        ['gifsicle'],
-        ['jpegtran'],
-        ['optipng'],
-    ];
-
-    if (isProduction) {
-        ImageMinimizerPlugins.push(['svgo', {
-            plugins: [
-                {
-                    name: "removeViewBox",
-                    active: false,
-                },
-                {
-                    name: "minifyStyles",
-                    active: true,
-                },
-                {
-                    name: "removeDoctype",
-                    active: true,
-                },
-                {
-                    name: "collapseGroups",
-                    active: true,
-                },
-                {
-                    name: "removeTitle",
-                    active: true,
-                },
-            ],
-        }]);
-    }
-
     let filemanagerSettings = {
         onEnd: {
             delete: Tailor.providerSettings.config.deleteOnEnd ?? ['| Nothing to delete.'],
@@ -206,7 +173,7 @@ module.exports = (env, options) => {
                 severityError: 'warning',
                 loader: false,
                 minimizerOptions: {
-                    plugins: ImageMinimizerPlugins,
+                    plugins: Tailor.imageOptimisationSettings(isProduction),
                 },
             }),
 

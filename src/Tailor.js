@@ -121,6 +121,43 @@ class Tailor {
             });
         }
     }
+
+    imageOptimisationSettings(isProduction = false) {
+        let settings = [
+            ['gifsicle'],
+            ['jpegtran'],
+            ['optipng'],
+        ];
+
+        if (isProduction) {
+            settings.push(['svgo', {
+                plugins: [
+                    {
+                        name: "removeViewBox",
+                        active: false,
+                    },
+                    {
+                        name: "minifyStyles",
+                        active: true,
+                    },
+                    {
+                        name: "removeDoctype",
+                        active: true,
+                    },
+                    {
+                        name: "collapseGroups",
+                        active: true,
+                    },
+                    {
+                        name: "removeTitle",
+                        active: true,
+                    },
+                ],
+            }]);
+        }
+
+        return settings;
+    }
 }
 
 module.exports = Tailor;
