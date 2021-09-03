@@ -45,6 +45,12 @@ module.exports = (env, options) => {
         }]);
     }
 
+    let filemanagerSettings = {
+        onEnd: {
+            delete: Tailor.providerSettings.config.deleteOnEnd ?? ['| Nothing to delete.'],
+        },
+    };
+
     return {
         stats: 'minimal',
 
@@ -157,11 +163,7 @@ module.exports = (env, options) => {
             }),
 
             new FileManagerPlugin({
-                events: {
-                    onEnd: {
-                        delete: Tailor.providerSettings.config.deleteOnEnd ?? ['| Nothing to delete.'],
-                    },
-                },
+                events: filemanagerSettings,
             }),
 
             new WebpackNotifierPlugin({
