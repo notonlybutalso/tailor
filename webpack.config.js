@@ -12,60 +12,6 @@ const Tailor = new TailorClass();
 module.exports = (env, options) => {
     const isProduction = options.mode == 'production';
 
-    let filemanagerSettings = {
-        onEnd: {
-            delete: Tailor.providerSettings.config.deleteOnEnd ?? ['| Nothing to delete.'],
-        },
-    };
-
-    if (isProduction) {
-        filemanagerSettings.onEnd = {
-            ...filemanagerSettings.onEnd,
-            ...{
-                delete: [
-                    Tailor.providerSettings.root + '/theme',
-                ],
-                mkdir: [
-                    Tailor.providerSettings.root + '/theme',
-                ],
-                copy: [
-                    {
-                        source: Tailor.providerSettings.root + '/dist/',
-                        destination: Tailor.providerSettings.root + '/theme/dist',
-                    },
-                    {
-                        source: Tailor.providerSettings.root + '/includes/',
-                        destination: Tailor.providerSettings.root + '/theme/includes',
-                    },
-                    {
-                        source: Tailor.providerSettings.root + '/src/',
-                        destination: Tailor.providerSettings.root + '/theme/src',
-                    },
-                    {
-                        source: Tailor.providerSettings.root + '/templates/',
-                        destination: Tailor.providerSettings.root + '/theme/templates',
-                    },
-                    {
-                        source: Tailor.providerSettings.root + '/vendor/',
-                        destination: Tailor.providerSettings.root + '/theme/vendor',
-                    },
-                    {
-                        source: Tailor.providerSettings.root + '/*.php',
-                        destination: Tailor.providerSettings.root + '/theme/',
-                    },
-                    {
-                        source: Tailor.providerSettings.root + '/style.css',
-                        destination: Tailor.providerSettings.root + '/theme/',
-                    },
-                    {
-                        source: Tailor.providerSettings.root + '/screenshot.*',
-                        destination: Tailor.providerSettings.root + '/theme/',
-                    },
-                ],
-            }
-        };
-    }
-
     return {
         stats: 'minimal',
 
@@ -178,7 +124,7 @@ module.exports = (env, options) => {
             }),
 
             new FileManagerPlugin({
-                events: filemanagerSettings,
+                events: Tailor.fileManagerSettings(isProduction),
             }),
 
             new WebpackNotifierPlugin({
