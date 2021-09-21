@@ -1,0 +1,15 @@
+version: 2
+
+updates:
+  # Maintain dependencies for Yarn
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "Type: Dependencies"
+    commit-message:
+      prefix: "Yarn"
+      include: "scope"
+    reviewers:
+      - "SebKay"
