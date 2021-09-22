@@ -40,7 +40,9 @@ module.exports = (env, options) => {
                     extractComments: false,
                     terserOptions: {
                         compress: {
-                            drop_console: true,
+                            pure_funcs: [
+                                'console.log',
+                            ],
                         },
                         format: {
                             comments: false,
