@@ -107,15 +107,7 @@ module.exports = (env, options) => {
                 filename: '../css/[name].min.css',
             }),
 
-            new CopyPlugin({
-                patterns: [
-                    {
-                        from: Path.resolve(Tailor.providerSettings.assetsDir + '/img'),
-                        to: Path.resolve(Tailor.providerSettings.buildDir + '/img'),
-                        noErrorOnMissing: true,
-                    },
-                ],
-            }),
+            new CopyPlugin(Tailor.copySettings(isProduction)),
 
             new ImageMinimizerPlugin({
                 severityError: 'warning',

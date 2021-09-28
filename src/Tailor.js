@@ -230,6 +230,30 @@ class Tailor {
 
         return settings;
     }
+
+    /**
+     * Settings for CopyPlugin
+     *
+     * @param {boolean} isProduction
+     * @returns {object}
+     */
+    copySettings(isProduction = false) {
+        let userSettings = this.providerSettings.config.copySettings ?? [];
+        let defaultSettings = [
+            {
+                from: path.resolve(this.providerSettings.assetsDir + '/img'),
+                to: path.resolve(this.providerSettings.buildDir + '/img'),
+                noErrorOnMissing: true,
+            },
+        ];
+
+        return {
+            patterns: [
+                ...userSettings,
+                ...defaultSettings,
+            ]
+        };
+    }
 }
 
 module.exports = Tailor;
