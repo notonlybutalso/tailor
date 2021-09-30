@@ -212,6 +212,10 @@ class Tailor {
                             destination: this.providerSettings.root + '/theme/vendor',
                         },
                         {
+                            source: this.providerSettings.root + '/woocommerce/',
+                            destination: this.providerSettings.root + '/theme/woocommerce',
+                        },
+                        {
                             source: this.providerSettings.root + '/*.php',
                             destination: this.providerSettings.root + '/theme/',
                         },
