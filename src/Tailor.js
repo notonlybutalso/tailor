@@ -1,6 +1,7 @@
 const path = require('path');
 const { spawn } = require('child_process');
 const chalk = require('chalk');
+const { existsSync } = require('fs');
 
 class Tailor {
     constructor() {
@@ -183,6 +184,48 @@ class Tailor {
         if (isProduction) {
             toDelete.push(this.providerSettings.root + '/theme');
 
+            let copy_settings = [
+                {
+                    source: this.providerSettings.root + '/dist/',
+                    destination: this.providerSettings.root + '/theme/dist',
+                },
+                {
+                    source: this.providerSettings.root + '/includes/',
+                    destination: this.providerSettings.root + '/theme/includes',
+                },
+                {
+                    source: this.providerSettings.root + '/src/',
+                    destination: this.providerSettings.root + '/theme/src',
+                },
+                {
+                    source: this.providerSettings.root + '/templates/',
+                    destination: this.providerSettings.root + '/theme/templates',
+                },
+                {
+                    source: this.providerSettings.root + '/vendor/',
+                    destination: this.providerSettings.root + '/theme/vendor',
+                },
+                {
+                    source: this.providerSettings.root + '/*.php',
+                    destination: this.providerSettings.root + '/theme/',
+                },
+                {
+                    source: this.providerSettings.root + '/style.css',
+                    destination: this.providerSettings.root + '/theme/',
+                },
+                {
+                    source: this.providerSettings.root + '/screenshot.*',
+                    destination: this.providerSettings.root + '/theme/',
+                },
+            ];
+
+            if (existsSync(this.providerSettings.root + '/woocommerce')) {
+                copy_settings.push({
+                    source: this.providerSettings.root + '/woocommerce',
+                    destination: this.providerSettings.root + '/theme/woocommerce',
+                });
+            }
+
             settings.onEnd = {
                 ...settings.onEnd,
                 ...{
@@ -190,44 +233,7 @@ class Tailor {
                     mkdir: [
                         this.providerSettings.root + '/theme',
                     ],
-                    copy: [
-                        {
-                            source: this.providerSettings.root + '/dist/',
-                            destination: this.providerSettings.root + '/theme/dist',
-                        },
-                        {
-                            source: this.providerSettings.root + '/includes/',
-                            destination: this.providerSettings.root + '/theme/includes',
-                        },
-                        {
-                            source: this.providerSettings.root + '/src/',
-                            destination: this.providerSettings.root + '/theme/src',
-                        },
-                        {
-                            source: this.providerSettings.root + '/templates/',
-                            destination: this.providerSettings.root + '/theme/templates',
-                        },
-                        {
-                            source: this.providerSettings.root + '/vendor/',
-                            destination: this.providerSettings.root + '/theme/vendor',
-                        },
-                        {
-                            source: this.providerSettings.root + '/woocommerce/',
-                            destination: this.providerSettings.root + '/theme/woocommerce',
-                        },
-                        {
-                            source: this.providerSettings.root + '/*.php',
-                            destination: this.providerSettings.root + '/theme/',
-                        },
-                        {
-                            source: this.providerSettings.root + '/style.css',
-                            destination: this.providerSettings.root + '/theme/',
-                        },
-                        {
-                            source: this.providerSettings.root + '/screenshot.*',
-                            destination: this.providerSettings.root + '/theme/',
-                        },
-                    ],
+                    copy: copy_settings,
                 },
             };
         }
@@ -245,8 +251,8 @@ class Tailor {
         let userSettings = this.providerSettings.config.copySettings ?? [];
         let defaultSettings = [
             {
-                from: path.resolve(this.providerSettings.assetsDir + '/img'),
-                to: path.resolve(this.providerSettings.buildDir + '/img'),
+                from: this.providerSettings.assetsDir + '/img',
+                to: this.providerSettings.buildDir + '/img',
                 noErrorOnMissing: true,
             },
         ];
