@@ -25,7 +25,7 @@
         "babel-loader": "^8.2",
         "chalk": "^4.1",
         "copy-webpack-plugin": "^9.0",
-        "css-loader": "^6.2",
+        "css-loader": "^6.5",
         "filemanager-webpack-plugin": "^6.1",
         "image-minimizer-webpack-plugin": "^2.2",
         "imagemin-gifsicle": "^7.0",
