@@ -226,6 +226,13 @@ class Tailor {
                 });
             }
 
+            if (existsSync(this.providerSettings.root + '/template-parts')) {
+                copy_settings.push({
+                    source: this.providerSettings.root + '/template-parts',
+                    destination: this.providerSettings.root + '/theme/template-parts',
+                });
+            }
+
             settings.onEnd = {
                 ...settings.onEnd,
                 ...{
