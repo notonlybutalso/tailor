@@ -131,7 +131,6 @@ class Tailor {
      */
     imageOptimisationSettings(isProduction = false) {
         let settings = [
-            ['gifsicle'],
             ['jpegtran'],
             ['optipng'],
         ];

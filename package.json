@@ -28,7 +28,6 @@
         "css-loader": "^6.5.1",
         "filemanager-webpack-plugin": "^6.1.7",
         "image-minimizer-webpack-plugin": "^2.2.0",
-        "imagemin-gifsicle": "^7.0.0",
         "imagemin-jpegtran": "^7.0.0",
         "imagemin-optipng": "^8.0.0",
         "imagemin-svgo": "^9.0.0",
