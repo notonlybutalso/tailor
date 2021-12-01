@@ -124,6 +124,7 @@ module.exports = (env, options) => {
             new WebpackNotifierPlugin({
                 emoji: true,
                 alwaysNotify: true,
+                timeout: false,
                 title: function () {
                     return 'Tailor';
                 },
