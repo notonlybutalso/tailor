@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 const chalk = require('chalk');
 const { existsSync } = require('fs');
 
-class Tailor {
+module.exports = class Tailor {
     constructor() {
         this.name = 'Tailor';
         this.root = path.resolve(__dirname, '../');
@@ -271,5 +271,3 @@ class Tailor {
         };
     }
 }
-
-module.exports = Tailor;
