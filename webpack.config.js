@@ -25,12 +25,13 @@ module.exports = (env, options) => {
 
         output: {
             filename: '[name].min.js',
-            path: Path.resolve(Tailor.providerSettings.buildDir + '/js'),
+            path: Path.resolve(Tailor.providerSettings.buildDir, 'js'),
         },
 
         resolve: {
             alias: {
                 'bxslider': 'bxslider/src/js/jquery.bxslider',
+                "../img": Path.resolve(Tailor.providerSettings.assetsDir, "img"),
             },
         },
 
@@ -55,17 +56,21 @@ module.exports = (env, options) => {
         module: {
             rules: [
                 {
-                    test: /\.svg$/,
-                    type: 'asset/inline',
-                },
-                {
                     test: /\.(sa|sc|c)ss$/,
                     use: [
                         MiniCssExtractPlugin.loader,
                         {
-                            loader: 'css-loader',
+                            loader: "css-loader",
                             options: {
-                                url: false,
+                                url: {
+                                    filter: (url, resourcePath) => {
+                                        if (url.includes(".svg")) {
+                                            return true;
+                                        }
+
+                                        return false;
+                                    },
+                                },
                             },
                         },
                         {
@@ -84,6 +89,10 @@ module.exports = (env, options) => {
                             loader: 'sass-loader',
                         },
                     ],
+                },
+                {
+                    test: /\.svg$/,
+                    type: 'asset',
                 },
                 {
                     test: /\.(js?)$/,
