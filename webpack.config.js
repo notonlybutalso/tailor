@@ -56,7 +56,7 @@ module.exports = (env, options) => {
             rules: [
                 {
                     test: /\.svg$/,
-                    loader: 'svg-inline-loader',
+                    type: 'asset/inline',
                 },
                 {
                     test: /\.(sa|sc|c)ss$/,
