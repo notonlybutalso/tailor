@@ -16,7 +16,7 @@ class Tailor {
             ...{
                 assetsDir: this.providerSettings.root + '/assets',
                 buildDir: this.providerSettings.root + '/dist',
-                config: require(this.providerSettings.root + '/tailor.js'),
+                config: require(this.providerSettings.root + '/tailor.config.js'),
             },
             ...this.providerSettings,
         };
