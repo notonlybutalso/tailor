@@ -60,15 +60,7 @@ module.exports = (env, options) => {
                         {
                             loader: "css-loader",
                             options: {
-                                url: {
-                                    filter: (url, resourcePath) => {
-                                        if (url.includes(".svg")) {
-                                            return true;
-                                        }
-
-                                        return false;
-                                    },
-                                },
+                                url: false,
                             },
                         },
                         {
@@ -90,7 +82,7 @@ module.exports = (env, options) => {
                 },
                 {
                     test: /\.svg$/,
-                    type: 'asset',
+                    type: 'asset/source',
                 },
                 {
                     test: /\.(js?)$/,
