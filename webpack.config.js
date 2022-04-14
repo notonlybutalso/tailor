@@ -48,6 +48,16 @@ module.exports = (env, options) => {
                         },
                     },
                 }),
+
+                new ImageMinimizerPlugin({
+                    severityError: 'warning',
+                    minimizer: {
+                        implementation: ImageMinimizerPlugin.imageminMinify,
+                        options: {
+                            plugins: Tailor.imageOptimisationSettings(isProduction),
+                        },
+                    },
+                }),
             ],
         },
 
@@ -106,14 +116,6 @@ module.exports = (env, options) => {
             }),
 
             new CopyPlugin(Tailor.copySettings(isProduction)),
-
-            new ImageMinimizerPlugin({
-                severityError: 'warning',
-                loader: false,
-                minimizerOptions: {
-                    plugins: Tailor.imageOptimisationSettings(isProduction),
-                },
-            }),
 
             new FileManagerPlugin({
                 events: Tailor.fileManagerSettings(isProduction),
