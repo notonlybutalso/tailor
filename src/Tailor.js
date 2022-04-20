@@ -172,74 +172,94 @@ module.exports = class Tailor {
      * @returns {object}
      */
     fileManagerSettings(isProduction = false) {
-        let toDelete = this.providerSettings.config.deleteOnEnd ?? ['| Nothing to delete.'];
+        let settings = {};
+        let destinationDirectory = `${this.providerSettings.root}/theme/`;
 
-        let settings = {
-            onEnd: {
-                delete: toDelete,
-            },
-        };
+        let deleteSettings = this.providerSettings.config.deleteOnEnd ?? [];
+
+        if (deleteSettings.length) {
+            settings.onEnd = {
+                delete: deleteSettings,
+            };
+        }
 
         if (isProduction) {
-            toDelete.push(this.providerSettings.root + '/theme');
+            if (existsSync(destinationDirectory)) {
+                deleteSettings.push(destinationDirectory);
+            }
 
-            let copy_settings = [
+            let copySettings = [
                 {
-                    source: this.providerSettings.root + '/dist/',
-                    destination: this.providerSettings.root + '/theme/dist',
+                    source: `${this.providerSettings.root}/*.php`,
+                    destination: destinationDirectory,
                 },
                 {
-                    source: this.providerSettings.root + '/includes/',
-                    destination: this.providerSettings.root + '/theme/includes',
+                    source: `${this.providerSettings.root}/style.css`,
+                    destination: destinationDirectory,
                 },
                 {
-                    source: this.providerSettings.root + '/src/',
-                    destination: this.providerSettings.root + '/theme/src',
-                },
-                {
-                    source: this.providerSettings.root + '/templates/',
-                    destination: this.providerSettings.root + '/theme/templates',
-                },
-                {
-                    source: this.providerSettings.root + '/vendor/',
-                    destination: this.providerSettings.root + '/theme/vendor',
-                },
-                {
-                    source: this.providerSettings.root + '/*.php',
-                    destination: this.providerSettings.root + '/theme/',
-                },
-                {
-                    source: this.providerSettings.root + '/style.css',
-                    destination: this.providerSettings.root + '/theme/',
-                },
-                {
-                    source: this.providerSettings.root + '/screenshot.*',
-                    destination: this.providerSettings.root + '/theme/',
+                    source: `${this.providerSettings.root}/screenshot.*`,
+                    destination: destinationDirectory,
                 },
             ];
 
-            if (existsSync(this.providerSettings.root + '/woocommerce')) {
-                copy_settings.push({
-                    source: this.providerSettings.root + '/woocommerce',
-                    destination: this.providerSettings.root + '/theme/woocommerce',
+            if (existsSync(this.providerSettings.root + '/dist')) {
+                copySettings.push({
+                    source: `${this.providerSettings.root}/dist/`,
+                    destination: `${destinationDirectory}/dist`,
                 });
             }
 
-            if (existsSync(this.providerSettings.root + '/template-parts')) {
-                copy_settings.push({
-                    source: this.providerSettings.root + '/template-parts',
-                    destination: this.providerSettings.root + '/theme/template-parts',
+            if (existsSync(this.providerSettings.root + '/includes')) {
+                copySettings.push({
+                    source: `${this.providerSettings.root}/includes/`,
+                    destination: `${destinationDirectory}/includes`,
+                });
+            }
+
+            if (existsSync(this.providerSettings.root + '/src')) {
+                copySettings.push({
+                    source: `${this.providerSettings.root}/src/`,
+                    destination: `${destinationDirectory}/src`,
+                });
+            }
+
+            if (existsSync(this.providerSettings.root + '/templates')) {
+                copySettings.push({
+                    source: `${this.providerSettings.root}/templates/`,
+                    destination: `${destinationDirectory}/templates`,
+                });
+            }
+
+            if (existsSync(this.providerSettings.root + '/resources')) {
+                copySettings.push({
+                    source: `${this.providerSettings.root}/resources/`,
+                    destination: `${destinationDirectory}/resources`,
+                });
+            }
+
+            if (existsSync(this.providerSettings.root + '/config')) {
+                copySettings.push({
+                    source: `${this.providerSettings.root}/config/`,
+                    destination: `${destinationDirectory}/config`,
+                });
+            }
+
+            if (existsSync(this.providerSettings.root + '/vendor')) {
+                copySettings.push({
+                    source: `${this.providerSettings.root}/vendor/`,
+                    destination: `${destinationDirectory}/vendor`,
                 });
             }
 
             settings.onEnd = {
                 ...settings.onEnd,
                 ...{
-                    delete: toDelete,
+                    delete: deleteSettings,
                     mkdir: [
-                        this.providerSettings.root + '/theme',
+                        destinationDirectory,
                     ],
-                    copy: copy_settings,
+                    copy: copySettings,
                 },
             };
         }
