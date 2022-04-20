@@ -210,6 +210,13 @@ module.exports = class Tailor {
                 });
             }
 
+            if (existsSync(this.providerSettings.root + '/inc')) {
+                copySettings.push({
+                    source: `${this.providerSettings.root}/inc/`,
+                    destination: `${destinationDirectory}/inc`,
+                });
+            }
+
             if (existsSync(this.providerSettings.root + '/includes')) {
                 copySettings.push({
                     source: `${this.providerSettings.root}/includes/`,
