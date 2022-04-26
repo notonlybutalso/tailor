@@ -232,6 +232,13 @@ class Tailor {
                 });
             }
 
+            if (existsSync(this.providerSettings.root + '/languages')) {
+                copy_settings.push({
+                    source: this.providerSettings.root + '/languages',
+                    destination: this.providerSettings.root + '/theme/languages',
+                });
+            }
+
             settings.onEnd = {
                 ...settings.onEnd,
                 ...{
