@@ -28,7 +28,6 @@ module.exports = (env, options) => {
 
         resolve: {
             alias: {
-                'bxslider': 'bxslider/src/js/jquery.bxslider',
                 "../img": Path.resolve(Tailor.providerSettings.assetsDir, "img"),
             },
         },
