@@ -18,12 +18,34 @@ module.exports = class Tailor {
             ...{
                 assetsDir: this.providerConfig.assetsDir ?? this.providerSettings.root + '/assets',
                 buildDir: this.providerConfig.buildDir ?? this.providerSettings.root + '/dist',
+                cssDir: '../css/',
             },
             ...this.providerSettings,
         };
 
-        this.webpackCliPath = this.root + '/node_modules/.bin/webpack';
-        this.webpackConfigPath = this.root + '/webpack.config.js';
+        this.webpackSettings = {
+            cliPath: this.root + '/node_modules/.bin/webpack',
+            configPath: this.root + '/webpack.config.js',
+            stats: 'minimal',
+            performance: {
+                hints: false,
+            },
+            entry: this.providerConfig.entry ?? {},
+            output: {
+                filename: '[name].min.js',
+                path: path.resolve(this.providerSettings.buildDir, "js"),
+            },
+            resolve: {
+                alias: {
+                    "../img": path.resolve(this.providerSettings.assetsDir, "img"),
+                },
+            }
+        };
+
+        if (this.providerConfig.buildFlat == true) {
+            this.webpackSettings.output.path = path.resolve(this.providerSettings.buildDir);
+            this.providerSettings.cssDir = '';
+        }
 
         this.cmdSettings = {
             spacerStart: chalk.gray(`============================== ${this.name} ==============================`),
@@ -33,10 +55,10 @@ module.exports = class Tailor {
 
     runDevelopment() {
         let cmd = spawn(
-            this.webpackCliPath,
+            this.webpackSettings.cliPath,
             [
                 '--mode=development',
-                `--config=${this.webpackConfigPath}`
+                `--config=${this.webpackSettings.configPath}`
             ],
             { stdio: "inherit" }
         );
@@ -50,10 +72,10 @@ module.exports = class Tailor {
 
     runProduction() {
         let cmd = spawn(
-            this.webpackCliPath,
+            this.webpackSettings.cliPath,
             [
                 '--mode=production',
-                `--config=${this.webpackConfigPath}`
+                `--config=${this.webpackSettings.configPath}`
             ],
             { stdio: "inherit" }
         );
@@ -67,11 +89,11 @@ module.exports = class Tailor {
 
     watchDevelopment() {
         const cmd = spawn(
-            this.webpackCliPath,
+            this.webpackSettings.cliPath,
             [
                 '--mode=development',
                 '--watch',
-                `--config=${this.webpackConfigPath}`,
+                `--config=${this.webpackSettings.configPath}`,
             ],
             { stdio: "inherit" }
         );
@@ -84,11 +106,11 @@ module.exports = class Tailor {
 
     watchProduction() {
         const cmd = spawn(
-            this.webpackCliPath,
+            this.webpackSettings.cliPath,
             [
                 '--mode=production',
                 '--watch',
-                `--config=${this.webpackConfigPath}`,
+                `--config=${this.webpackSettings.configPath}`,
             ],
             { stdio: "inherit" }
         );
@@ -282,11 +304,17 @@ module.exports = class Tailor {
      * @returns {object}
      */
     copySettings(isProduction = false) {
+        let buildDir = path.resolve(this.providerSettings.buildDir, 'img');
+
+        if (this.providerConfig.buildFlat == true) {
+            buildDir = path.resolve(this.providerSettings.buildDir);
+        }
+
         let userSettings = this.providerConfig.copySettings ?? [];
         let defaultSettings = [
             {
-                from: this.providerSettings.assetsDir + '/img',
-                to: this.providerSettings.buildDir + '/img',
+                from: path.resolve(this.providerSettings.assetsDir, 'img'),
+                to: buildDir,
                 noErrorOnMissing: true,
             },
         ];

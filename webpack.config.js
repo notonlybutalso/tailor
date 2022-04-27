@@ -13,24 +13,15 @@ module.exports = (env, options) => {
     const isProduction = options.mode == 'production';
 
     return {
-        stats: 'minimal',
+        stats: Tailor.webpackSettings.stats,
 
-        performance: {
-            hints: false,
-        },
+        performance: Tailor.webpackSettings.performance,
 
-        entry: Tailor.providerConfig.entry ?? {},
+        entry: Tailor.webpackSettings.entry,
 
-        output: {
-            filename: '[name].min.js',
-            path: Path.resolve(Tailor.providerSettings.buildDir, 'js'),
-        },
+        output: Tailor.webpackSettings.output,
 
-        resolve: {
-            alias: {
-                "../img": Path.resolve(Tailor.providerSettings.assetsDir, "img"),
-            },
-        },
+        resolve: Tailor.webpackSettings.resolve,
 
         optimization: {
             minimizer: [
@@ -111,7 +102,7 @@ module.exports = (env, options) => {
 
         plugins: [
             new MiniCssExtractPlugin({
-                filename: '../css/[name].min.css',
+                filename: `${Tailor.providerSettings.cssDir}[name].min.css`,
             }),
 
             new CopyPlugin(Tailor.copySettings(isProduction)),
