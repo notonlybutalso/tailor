@@ -19,7 +19,7 @@ module.exports = (env, options) => {
             hints: false,
         },
 
-        entry: Tailor.providerSettings.config.entry ?? {},
+        entry: Tailor.providerConfig.entry ?? {},
 
         output: {
             filename: '[name].min.js',

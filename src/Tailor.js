@@ -12,11 +12,12 @@ module.exports = class Tailor {
             root: path.resolve(process.cwd()),
         };
 
+        this.providerConfig = require(this.providerSettings.root + '/tailor.config.js');
+
         this.providerSettings = {
             ...{
-                assetsDir: this.providerSettings.root + '/assets',
-                buildDir: this.providerSettings.root + '/dist',
-                config: require(this.providerSettings.root + '/tailor.config.js'),
+                assetsDir: this.providerConfig.assetsDir ?? this.providerSettings.root + '/assets',
+                buildDir: this.providerConfig.buildDir ?? this.providerSettings.root + '/dist',
             },
             ...this.providerSettings,
         };
@@ -175,7 +176,7 @@ module.exports = class Tailor {
         let settings = {};
         let destinationDirectory = `${this.providerSettings.root}/theme/`;
 
-        let deleteSettings = this.providerSettings.config.deleteOnEnd ?? [];
+        let deleteSettings = this.providerConfig.deleteOnEnd ?? [];
 
         if (deleteSettings.length) {
             settings.onEnd = {
@@ -281,7 +282,7 @@ module.exports = class Tailor {
      * @returns {object}
      */
     copySettings(isProduction = false) {
-        let userSettings = this.providerSettings.config.copySettings ?? [];
+        let userSettings = this.providerConfig.copySettings ?? [];
         let defaultSettings = [
             {
                 from: this.providerSettings.assetsDir + '/img',
