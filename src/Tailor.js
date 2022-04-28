@@ -307,7 +307,7 @@ module.exports = class Tailor {
         let buildDir = path.resolve(this.providerSettings.buildDir, 'img');
 
         if (this.providerConfig.buildFlat == true) {
-            buildDir = path.resolve(this.providerSettings.buildDir);
+            buildDir = path.resolve(this.providerSettings.buildDir, '[name][ext]');
         }
 
         let userSettings = this.providerConfig.copySettings ?? [];
