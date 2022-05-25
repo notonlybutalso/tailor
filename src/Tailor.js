@@ -200,17 +200,7 @@ module.exports = class Tailor {
 
         let deleteSettings = this.providerConfig.deleteOnEnd ?? [];
 
-        if (deleteSettings.length) {
-            settings.onEnd = {
-                delete: deleteSettings,
-            };
-        }
-
         if (isProduction) {
-            if (existsSync(destinationDirectory)) {
-                deleteSettings.push(destinationDirectory);
-            }
-
             let copySettings = [
                 {
                     source: `${this.providerSettings.root}/*.php`,
@@ -285,13 +275,25 @@ module.exports = class Tailor {
             settings.onEnd = {
                 ...settings.onEnd,
                 ...{
-                    delete: deleteSettings,
                     mkdir: [
                         destinationDirectory,
                     ],
                     copy: copySettings,
                 },
             };
+
+            if (existsSync(destinationDirectory)) {
+                deleteSettings.push(destinationDirectory);
+
+            }
+
+            console.log(deleteSettings);
+
+            if (deleteSettings.length) {
+                settings.onEnd = {
+                    delete: deleteSettings,
+                };
+            }
         }
 
         return settings;
