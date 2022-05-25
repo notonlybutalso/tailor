@@ -196,25 +196,35 @@ module.exports = class Tailor {
      */
     fileManagerSettings(isProduction = false) {
         let settings = {};
-        let destinationDirectory = `${this.providerSettings.root}/theme/`;
+        let destinationDirectory = `${this.providerSettings.root}/theme`;
 
         let deleteSettings = this.providerConfig.deleteOnEnd ?? [];
+        let copySettings = this.providerConfig.copySettings ?? [];
 
         if (isProduction) {
-            let copySettings = [
-                {
-                    source: `${this.providerSettings.root}/*.php`,
-                    destination: destinationDirectory,
-                },
-                {
+            settings.onEnd = {
+                mkdir: [
+                    destinationDirectory,
+                ],
+            };
+
+            //---- Copy
+            copySettings.push({
+                source: `${this.providerSettings.root}/*.php`,
+                destination: destinationDirectory,
+            });
+
+            copySettings.push({
+                source: `${this.providerSettings.root}/screenshot.*`,
+                destination: destinationDirectory,
+            });
+
+            if (existsSync(this.providerSettings.root + '/style.css')) {
+                copySettings.push({
                     source: `${this.providerSettings.root}/style.css`,
-                    destination: destinationDirectory,
-                },
-                {
-                    source: `${this.providerSettings.root}/screenshot.*`,
-                    destination: destinationDirectory,
-                },
-            ];
+                    destination: `${destinationDirectory}/style.css`,
+                });
+            }
 
             if (existsSync(this.providerSettings.root + '/dist')) {
                 copySettings.push({
@@ -272,24 +282,26 @@ module.exports = class Tailor {
                 });
             }
 
-            settings.onEnd = {
-                ...settings.onEnd,
-                ...{
-                    mkdir: [
-                        destinationDirectory,
-                    ],
-                    copy: copySettings,
-                },
-            };
+            if (copySettings.length) {
+                settings.onEnd = {
+                    ...settings.onEnd,
+                    ...{
+                        copy: copySettings,
+                    }
+                };
+            }
 
+            //---- Delete
             if (existsSync(destinationDirectory)) {
                 deleteSettings.push(destinationDirectory);
-
             }
 
             if (deleteSettings.length) {
                 settings.onEnd = {
-                    delete: deleteSettings,
+                    ...settings.onEnd,
+                    ...{
+                        delete: deleteSettings,
+                    }
                 };
             }
         }
