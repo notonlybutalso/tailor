@@ -199,7 +199,7 @@ module.exports = class Tailor {
         let destinationDirectory = `${this.providerSettings.root}/theme`;
 
         let deleteSettings = this.providerConfig.deleteOnEnd ?? [];
-        let copySettings = this.providerConfig.copySettings ?? [];
+        let copySettings = this.providerConfig.copyOnEnd ?? [];
 
         if (isProduction) {
             settings.onStart = {
@@ -328,20 +328,17 @@ module.exports = class Tailor {
             buildDir = path.resolve(this.providerSettings.buildDir, '[name][ext]');
         }
 
-        let userSettings = this.providerConfig.copySettings ?? [];
-        let defaultSettings = [
-            {
-                from: path.resolve(this.providerSettings.assetsDir, 'img'),
-                to: buildDir,
-                noErrorOnMissing: true,
-            },
-        ];
-
         return {
             patterns: [
-                ...userSettings,
-                ...defaultSettings,
-            ]
+                ...this.providerConfig.copySettings ?? [],
+                ...[
+                    {
+                        from: path.resolve(this.providerSettings.assetsDir, 'img'),
+                        to: buildDir,
+                        noErrorOnMissing: true,
+                    }
+                ],
+            ],
         };
     }
 }
