@@ -287,8 +287,6 @@ module.exports = class Tailor {
 
             }
 
-            console.log(deleteSettings);
-
             if (deleteSettings.length) {
                 settings.onEnd = {
                     delete: deleteSettings,
