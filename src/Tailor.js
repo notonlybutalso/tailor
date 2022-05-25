@@ -202,6 +202,12 @@ module.exports = class Tailor {
         let copySettings = this.providerConfig.copySettings ?? [];
 
         if (isProduction) {
+            settings.onStart = {
+                delete: [
+                    destinationDirectory,
+                ],
+            };
+
             settings.onEnd = {
                 mkdir: [
                     destinationDirectory,
