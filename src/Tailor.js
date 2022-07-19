@@ -1,7 +1,7 @@
 const path = require('path');
 const { spawn } = require('child_process');
 const chalk = require('chalk');
-const { existsSync } = require('fs');
+const fs = require('fs');
 
 module.exports = class Tailor {
     constructor() {
@@ -202,17 +202,20 @@ module.exports = class Tailor {
         let copySettings = this.providerConfig.copyOnEnd ?? [];
 
         if (isProduction) {
-            settings.onStart = {
-                delete: [
-                    destinationDirectory,
-                ],
-            };
+            if (fs.existsSync(destinationDirectory)) {
+                fs.rmSync(destinationDirectory, {
+                    recursive: true,
+                    force: true,
+                });
+            }
 
-            settings.onEnd = {
-                mkdir: [
-                    destinationDirectory,
-                ],
-            };
+            if (!fs.existsSync(destinationDirectory)) {
+                settings.onStart = {
+                    mkdir: [
+                        destinationDirectory,
+                    ],
+                };
+            }
 
             //---- Copy
             copySettings.push({
@@ -225,68 +228,66 @@ module.exports = class Tailor {
                 destination: destinationDirectory,
             });
 
-            if (existsSync(this.providerSettings.root + '/style.css')) {
+            if (fs.existsSync(this.providerSettings.root + '/style.css')) {
                 copySettings.push({
                     source: `${this.providerSettings.root}/style.css`,
                     destination: `${destinationDirectory}/style.css`,
                 });
             }
 
-            if (existsSync(this.providerSettings.root + '/dist')) {
-                copySettings.push({
-                    source: `${this.providerSettings.root}/dist/`,
-                    destination: `${destinationDirectory}/dist`,
-                });
-            }
-
-            if (existsSync(this.providerSettings.root + '/inc')) {
+            if (fs.existsSync(this.providerSettings.root + '/inc')) {
                 copySettings.push({
                     source: `${this.providerSettings.root}/inc/`,
                     destination: `${destinationDirectory}/inc`,
                 });
             }
 
-            if (existsSync(this.providerSettings.root + '/includes')) {
+            if (fs.existsSync(this.providerSettings.root + '/includes')) {
                 copySettings.push({
                     source: `${this.providerSettings.root}/includes/`,
                     destination: `${destinationDirectory}/includes`,
                 });
             }
 
-            if (existsSync(this.providerSettings.root + '/src')) {
+            if (fs.existsSync(this.providerSettings.root + '/src')) {
                 copySettings.push({
                     source: `${this.providerSettings.root}/src/`,
                     destination: `${destinationDirectory}/src`,
                 });
             }
 
-            if (existsSync(this.providerSettings.root + '/templates')) {
+            if (fs.existsSync(this.providerSettings.root + '/templates')) {
                 copySettings.push({
                     source: `${this.providerSettings.root}/templates/`,
                     destination: `${destinationDirectory}/templates`,
                 });
             }
 
-            if (existsSync(this.providerSettings.root + '/resources')) {
+            if (fs.existsSync(this.providerSettings.root + '/resources')) {
                 copySettings.push({
                     source: `${this.providerSettings.root}/resources/`,
                     destination: `${destinationDirectory}/resources`,
                 });
             }
 
-            if (existsSync(this.providerSettings.root + '/config')) {
+            if (fs.existsSync(this.providerSettings.root + '/config')) {
                 copySettings.push({
                     source: `${this.providerSettings.root}/config/`,
                     destination: `${destinationDirectory}/config`,
                 });
             }
 
-            if (existsSync(this.providerSettings.root + '/vendor')) {
+            if (fs.existsSync(this.providerSettings.root + '/vendor')) {
                 copySettings.push({
                     source: `${this.providerSettings.root}/vendor/`,
                     destination: `${destinationDirectory}/vendor`,
                 });
             }
+
+            copySettings.push({
+                source: `${this.providerSettings.root}/dist/`,
+                destination: `${destinationDirectory}/dist`,
+            });
 
             if (copySettings.length) {
                 settings.onEnd = {
@@ -298,7 +299,7 @@ module.exports = class Tailor {
             }
 
             //---- Delete
-            if (existsSync(destinationDirectory)) {
+            if (fs.existsSync(destinationDirectory)) {
                 deleteSettings.push(destinationDirectory);
             }
 
@@ -322,10 +323,10 @@ module.exports = class Tailor {
      * @returns {object}
      */
     copySettings(isProduction = false) {
-        let buildDir = path.resolve(this.providerSettings.buildDir, 'img');
+        let imgBuildDir = path.resolve(this.providerSettings.buildDir, 'img');
 
         if (this.providerConfig.buildFlat == true) {
-            buildDir = path.resolve(this.providerSettings.buildDir, '[name][ext]');
+            imgBuildDir = path.resolve(this.providerSettings.buildDir, '[name][ext]');
         }
 
         return {
@@ -334,9 +335,9 @@ module.exports = class Tailor {
                 ...[
                     {
                         from: path.resolve(this.providerSettings.assetsDir, 'img'),
-                        to: buildDir,
+                        to: imgBuildDir,
                         noErrorOnMissing: true,
-                    }
+                    },
                 ],
             ],
         };
