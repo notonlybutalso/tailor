@@ -125,8 +125,6 @@ module.exports = class Tailor {
             }
         };
 
-        console.log(this.webpackSettings.resolve);
-
         if (this.providerConfig.buildFlat == true) {
             this.webpackSettings.output.path = path.resolve(this.providerSettings.buildDir);
         }
