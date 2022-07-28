@@ -3,8 +3,13 @@ const { spawn } = require('child_process');
 const chalk = require('chalk');
 const fs = require('fs');
 
+const CopyPlugin = require("copy-webpack-plugin");
+const WebpackNotifierPlugin = require('webpack-notifier');
+const FileManagerPlugin = require('filemanager-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = class Tailor {
-    constructor() {
+    constructor(isProduction) {
         this.name = 'Tailor';
         this.root = path.resolve(__dirname, '../');
 
@@ -39,7 +44,27 @@ module.exports = class Tailor {
                 alias: {
                     "../img": path.resolve(this.providerSettings.assetsDir, "img"),
                 },
-            }
+            },
+            plugins: [
+                new MiniCssExtractPlugin({
+                    filename: `${this.providerSettings.cssDir}[name].min.css`,
+                }),
+
+                new CopyPlugin(this.copySettings(isProduction)),
+
+                new FileManagerPlugin({
+                    events: this.fileManagerSettings(isProduction),
+                }),
+
+                new WebpackNotifierPlugin({
+                    emoji: true,
+                    alwaysNotify: true,
+                    timeout: false,
+                    title: function () {
+                        return 'Tailor';
+                    },
+                }),
+        ]
         };
 
         if (this.providerConfig.buildFlat == true) {

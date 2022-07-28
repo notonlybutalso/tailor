@@ -1,16 +1,11 @@
-const Path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const CopyPlugin = require("copy-webpack-plugin");
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-const WebpackNotifierPlugin = require('webpack-notifier');
-const FileManagerPlugin = require('filemanager-webpack-plugin');
 const TailorClass = require('./src/Tailor');
-
-const Tailor = new TailorClass();
 
 module.exports = (env, options) => {
     const isProduction = options.mode == 'production';
+    const Tailor = new TailorClass(isProduction);
 
     return {
         stats: Tailor.webpackSettings.stats,
@@ -100,25 +95,6 @@ module.exports = (env, options) => {
             ]
         },
 
-        plugins: [
-            new MiniCssExtractPlugin({
-                filename: `${Tailor.providerSettings.cssDir}[name].min.css`,
-            }),
-
-            new CopyPlugin(Tailor.copySettings(isProduction)),
-
-            new FileManagerPlugin({
-                events: Tailor.fileManagerSettings(isProduction),
-            }),
-
-            new WebpackNotifierPlugin({
-                emoji: true,
-                alwaysNotify: true,
-                timeout: false,
-                title: function () {
-                    return 'Tailor';
-                },
-            }),
-        ],
+        plugins: Tailor.webpackSettings.plugins
     }
 };
