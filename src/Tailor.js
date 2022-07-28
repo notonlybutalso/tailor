@@ -45,8 +45,14 @@ module.exports = class Tailor {
                 path: path.resolve(this.providerSettings.buildDir, "js"),
             },
             resolve: {
-                alias: {
-                    "../img": path.resolve(this.providerSettings.assetsDir, "img"),
+                ...(this.providerConfig.resolve ?? {}),
+                ...{
+                    alias: {
+                        ...this.providerConfig.resolve.alias ?? {},
+                        ...{
+                            "../img": path.resolve(this.providerSettings.assetsDir, "img"),
+                        }
+                    }
                 },
             },
             plugins: [
@@ -118,6 +124,8 @@ module.exports = class Tailor {
                 ].concat(this.providerConfig?.module?.rules ?? []),
             }
         };
+
+        console.log(this.webpackSettings.resolve);
 
         if (this.providerConfig.buildFlat == true) {
             this.webpackSettings.output.path = path.resolve(this.providerSettings.buildDir);
