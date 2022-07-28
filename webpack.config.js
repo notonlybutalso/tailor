@@ -1,4 +1,3 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const TailorClass = require('./src/Tailor');
@@ -47,52 +46,7 @@ module.exports = (env, options) => {
         },
 
         module: {
-            rules: [
-                {
-                    test: /\.(sa|sc|c)ss$/,
-                    use: [
-                        MiniCssExtractPlugin.loader,
-                        {
-                            loader: "css-loader",
-                            options: {
-                                url: false,
-                            },
-                        },
-                        {
-                            loader: "postcss-loader",
-                            options: {
-                                postcssOptions: {
-                                    plugins: [
-                                        [
-                                            "autoprefixer",
-                                        ],
-                                    ],
-                                },
-                            },
-                        },
-                        {
-                            loader: 'sass-loader',
-                        },
-                    ],
-                },
-                {
-                    test: /\.svg$/,
-                    type: 'asset/source',
-                },
-                {
-                    test: /\.(js?)$/,
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            plugins: [
-                                '@babel/plugin-transform-template-literals',
-                                '@babel/plugin-transform-block-scoping',
-                                '@babel/plugin-proposal-nullish-coalescing-operator',
-                            ],
-                        },
-                    },
-                },
-            ]
+            rules: Tailor.webpackSettings.module.rules,
         },
 
         plugins: Tailor.webpackSettings.plugins

@@ -28,6 +28,10 @@ module.exports = class Tailor {
             ...this.providerSettings,
         };
 
+        if (this.providerConfig.buildFlat == true) {
+            this.providerSettings.cssDir = '';
+        }
+
         this.webpackSettings = {
             cliPath: this.root + '/node_modules/.bin/webpack',
             configPath: this.root + '/webpack.config.js',
@@ -65,11 +69,58 @@ module.exports = class Tailor {
                     },
                 }),
             ].concat(this.providerConfig.plugins ?? []),
+            module: {
+                rules: [
+                    {
+                        test: /\.(sa|sc|c)ss$/,
+                        use: [
+                            MiniCssExtractPlugin.loader,
+                            {
+                                loader: "css-loader",
+                                options: {
+                                    url: false,
+                                },
+                            },
+                            {
+                                loader: "postcss-loader",
+                                options: {
+                                    postcssOptions: {
+                                        plugins: [
+                                            [
+                                                "autoprefixer",
+                                            ],
+                                        ],
+                                    },
+                                },
+                            },
+                            {
+                                loader: 'sass-loader',
+                            },
+                        ],
+                    },
+                    {
+                        test: /\.svg$/,
+                        type: 'asset/source',
+                    },
+                    {
+                        test: /\.(js?)$/,
+                        use: {
+                            loader: 'babel-loader',
+                            options: {
+                                plugins: [
+                                    '@babel/plugin-transform-template-literals',
+                                    '@babel/plugin-transform-block-scoping',
+                                    '@babel/plugin-proposal-nullish-coalescing-operator',
+                                ],
+                            },
+                        },
+                    },
+                ].concat(this.providerConfig?.module?.rules ?? []),
+            }
         };
 
         if (this.providerConfig.buildFlat == true) {
             this.webpackSettings.output.path = path.resolve(this.providerSettings.buildDir);
-            this.providerSettings.cssDir = '';
         }
 
         this.cmdSettings = {
