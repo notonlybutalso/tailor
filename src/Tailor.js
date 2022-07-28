@@ -64,7 +64,7 @@ module.exports = class Tailor {
                         return 'Tailor';
                     },
                 }),
-        ]
+            ].concat(this.providerConfig.plugins ?? []),
         };
 
         if (this.providerConfig.buildFlat == true) {
