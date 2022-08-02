@@ -48,7 +48,7 @@ module.exports = class Tailor {
                 ...(this.providerConfig.resolve ?? {}),
                 ...{
                     alias: {
-                        ...this.providerConfig.resolve.alias ?? {},
+                        ...this.providerConfig?.resolve?.alias ?? {},
                         ...{
                             "../img": path.resolve(this.providerSettings.assetsDir, "img"),
                         }
@@ -74,7 +74,7 @@ module.exports = class Tailor {
                         return 'Tailor';
                     },
                 }),
-            ].concat(this.providerConfig.plugins ?? []),
+            ].concat(this.providerConfig?.plugins ?? []),
             module: {
                 rules: [
                     {
