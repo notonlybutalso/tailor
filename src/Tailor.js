@@ -33,7 +33,7 @@ module.exports = class Tailor {
         }
 
         this.webpackSettings = {
-            cliPath: this.root + '/node_modules/.bin/webpack',
+            cliPath: this.providerSettings.root + '/node_modules/.bin/webpack',
             configPath: this.root + '/webpack.config.js',
             stats: 'minimal',
             performance: {
