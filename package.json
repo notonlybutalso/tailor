@@ -42,7 +42,8 @@
         "webpack-notifier": "^1.15.0"
     },
     "scripts": {
-        "tailor": "./tailor.js"
+        "tailor": "./tailor.js",
+        "test": ""
     },
     "bin": {
         "tailor": "./tailor.js"
