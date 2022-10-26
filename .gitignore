@@ -3,4 +3,4 @@
 
 # Files
 yarn.lock
-package-json.lock
+package-lock.json
