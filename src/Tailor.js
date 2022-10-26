@@ -113,6 +113,9 @@ module.exports = class Tailor {
                         use: {
                             loader: 'babel-loader',
                             options: {
+                                presets: [
+                                    '@babel/preset-env',
+                                ],
                                 plugins: [
                                     '@babel/plugin-transform-template-literals',
                                     '@babel/plugin-transform-block-scoping',
