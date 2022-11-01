@@ -12,7 +12,7 @@ updates:
     labels:
       - "Type: Dependencies"
     commit-message:
-      prefix: "Yarn"
+      prefix: "NPM"
       include: "scope"
     reviewers:
       - "SebKay"
