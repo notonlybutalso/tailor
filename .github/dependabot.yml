@@ -8,6 +8,7 @@ updates:
       - dependency-type: "direct"
     schedule:
       interval: "monthly"
+      time: "03:00"
     labels:
       - "Type: Dependencies"
     commit-message:
@@ -15,6 +16,3 @@ updates:
       include: "scope"
     reviewers:
       - "SebKay"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
