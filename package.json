@@ -48,5 +48,6 @@
     },
     "bin": {
         "tailor": "./tailor.js"
-    }
+    },
+    "type": "module"
 }

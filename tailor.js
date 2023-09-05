@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
-const path = require('path');
-const TailorClass = require(path.resolve(__dirname, './src/Tailor'));
-const Tailor = new TailorClass();
+// import { resolve } from 'path';
+// const TailorClass = require(resolve(__dirname, './src/Tailor'));
+// const Tailor = new TailorClass();
+
+import { runDevelopment, runProduction, watchDevelopment, watchProduction } from './src/Tailor.js';
 
 const commands = process.argv.slice(2);
 
@@ -11,20 +13,20 @@ const commands = process.argv.slice(2);
  */
 //----  Webpack devevelopment build
 if (commands.includes('dev')) {
-    Tailor.runDevelopment();
+    runDevelopment();
 }
 
 //----  Webpack production build
 if (commands.includes('prod')) {
-    Tailor.runProduction();
+    runProduction();
 }
 
 //----  Webpack watch for development changes
 if (commands.includes('watch-dev')) {
-    Tailor.watchDevelopment();
+    watchDevelopment();
 }
 
 //----  Webpack watch for production changes
 if (commands.includes('watch-prod')) {
-    Tailor.watchProduction();
+    watchProduction();
 }
