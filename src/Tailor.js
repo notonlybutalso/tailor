@@ -1,3 +1,5 @@
+import { readFileSync } from 'fs';
+
 export function runDevelopment() {
     console.info('run development');
 
@@ -20,4 +22,10 @@ export function watchProduction() {
     console.info('watch production');
 
     return null;
+}
+
+export function webpackSettings() {
+    const settings = JSON.parse(readFileSync('./tailor.json', 'utf8'));
+
+    return settings;
 }

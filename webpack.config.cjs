@@ -1,10 +1,10 @@
 const TerserPlugin = require('terser-webpack-plugin');
-const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-const TailorClass = require('./src/Tailor');
+const ImageMinimizerPlugin = require('image-minimizåer-webpack-plugin');
+// const TailorClass = require('./src/Tailor');
 
 module.exports = (env, options) => {
     const isProduction = options.mode == 'production';
-    const Tailor = new TailorClass(isProduction);
+    // const Tailor = new TailorClass(isProduction);
 
     return {
         stats: Tailor.webpackSettings.stats,
