@@ -9,7 +9,7 @@
     },
     "main": "./src/Tailor.js",
     "repository": {
-        "url": "https://github.com/Fhoke/tailor.git",
+        "url": "git+https://github.com/Fhoke/tailor.git",
         "type": "git"
     },
     "publishConfig": {
@@ -47,6 +47,6 @@
         "test": ""
     },
     "bin": {
-        "tailor": "./tailor.js"
+        "tailor": "tailor.js"
     }
 }
