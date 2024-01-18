@@ -145,7 +145,7 @@ module.exports = class Tailor {
                 '--mode=development',
                 `--config=${this.webpackSettings.configPath}`
             ],
-            { stdio: "inherit" }
+            { stdio: "inherit", shell: true }
         );
 
         this.executeCommand(
@@ -162,7 +162,7 @@ module.exports = class Tailor {
                 '--mode=production',
                 `--config=${this.webpackSettings.configPath}`
             ],
-            { stdio: "inherit" }
+            { stdio: "inherit", shell: true }
         );
 
         this.executeCommand(
@@ -180,7 +180,7 @@ module.exports = class Tailor {
                 '--watch',
                 `--config=${this.webpackSettings.configPath}`,
             ],
-            { stdio: "inherit" }
+            { stdio: "inherit", shell: true }
         );
 
         this.executeCommand(
@@ -197,7 +197,7 @@ module.exports = class Tailor {
                 '--watch',
                 `--config=${this.webpackSettings.configPath}`,
             ],
-            { stdio: "inherit" }
+            { stdio: "inherit", shell: true }
         );
 
         this.executeCommand(
