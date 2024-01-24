@@ -7,6 +7,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const WebpackNotifierPlugin = require('webpack-notifier');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const Webpack = require('webpack');
 
 module.exports = class Tailor {
     constructor(isProduction) {
@@ -74,6 +75,9 @@ module.exports = class Tailor {
                         return 'Tailor';
                     },
                 }),
+
+                new Webpack.DefinePlugin({ __VUE_OPTIONS_API__: true, __VUE_PROD_DEVTOOLS__: true, __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true}),
+
             ].concat(this.providerConfig?.plugins ?? []),
             module: {
                 rules: [
